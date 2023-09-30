@@ -12,10 +12,10 @@ body, .navbar{
     color: black;
 }
 
-.input{
+.input, .yearSelect{
     background-color: #e9edc9;
 }
 
-.output, .name{
-    background-color: #fefae0;
+.output, .name, .yearName, .tableItem{
+    background-color: #fefae0 !important;
 }
