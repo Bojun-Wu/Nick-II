@@ -1,0 +1,21 @@
+/* *{
+    border: 1px solid red;
+} */
+
+/* background-color */
+body, .navbar{
+    background-color: #ccd5ae;
+}
+
+/* text color */
+.input, .output, .name,body, .navbar{
+    color: black;
+}
+
+.input{
+    background-color: #e9edc9;
+}
+
+.output, .name{
+    background-color: #fefae0;
+}
