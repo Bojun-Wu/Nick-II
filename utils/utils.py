@@ -9,7 +9,11 @@ def transName(name):
 
 
 def getRecommand(year, sex, name, model="gpt-4"):
-    transName = transName(name)
+
+    nameSap = transName(name)
+
+    openai.api_key = config('OPENAI_API_KEY')
+    openai.api_base = config('OPENAI_API_BASE')
 
     chat_completion = openai.ChatCompletion.create(
         stream=False,
@@ -29,7 +33,7 @@ def getRecommand(year, sex, name, model="gpt-4"):
             },
             {
                 "role": "user",
-                "content": f"{year}, {sex}, {transName}"
+                "content": f"{year}, {sex}, {nameSap}"
             },
         ],
     )
