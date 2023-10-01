@@ -16,43 +16,50 @@
     <div class="container">
       <div class="mainArea row justify-content-center">
         <div class="input col-xxl-6 h-100 card p-5 mt-3">
-          <form class="row g-3">
+          <form class="row g-3" id="searchForm" method="POST">
+            {% csrf_token %}
             <div class="col-md-6">
-              <label for="inputEmail4" class="form-label fs-5">姓</label>
+              <label for="lastName" class="form-label fs-5">姓</label>
               <input
-                type="email"
+                type="text"
                 class="form-control"
-                id="inputEmail4"
+                id="lastName"
                 placeholder="王"
+                name="lastName"
               />
             </div>
             <div class="col-md-6">
-              <label for="inputPassword4" class="form-label fs-5">名</label>
+              <label for="firstName" class="form-label fs-5">名</label>
               <input
-                type="password"
+                type="text"
                 class="form-control"
-                id="inputPassword4"
+                id="firstName"
                 placeholder="大明"
+                name = "firstName"
               />
             </div>
             <div class="col-md-5 mb-3">
-              <label for="inputPassword4" class="form-label fs-5">出生年</label>
+              <label for="year" class="form-label fs-5">出生年</label>
               <input
-                type="password"
+                type="number"
                 class="form-control"
-                id="inputPassword4"
+                id="year"
                 placeholder="2000"
+                min="1900"
+                max="2010"
+                step="10"
+                name = "year"
               />
             </div>
             <div class="col-md-5">
-              <label for="inputPassword4" class="form-label fs-5">性別</label>
-              <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>男</option>
+              <label for="inputState" class="form-label fs-5">性別</label>
+              <select id="inputState" class="form-select" name="sex">
+                <option selected>男</option>
                 <option>女</option>
               </select>
             </div>
             <div class="col-12">
+              <button type="reset" class="btn btn-secondary mx-2">清除</button>
               <button type="submit" class="btn btn-primary">輸入</button>
             </div>
           </form>
@@ -60,14 +67,37 @@
         <div class="output row col-xxl-2 card p-5 mt-5">
           <h4 class="h4 col-12">推薦</h4>
           <ul class="name list-group list-group-flush col-12">
-            <li class="list-group-item name">Tommy</li>
-            <li class="list-group-item name">Bob</li>
-            <li class="list-group-item name">Jimmy</li>
-            <li class="list-group-item name">Kitty</li>
-            <li class="list-group-item name">Joe</li>
+            <li class="list-group-item name" id="name1">{{ name1 }}</li>
+            <li class="list-group-item name" id="name2">Bob</li>
+            <li class="list-group-item name" id="name3">Jimmy</li>
+            <li class="list-group-item name" id="name4">Kitty</li>
+            <li class="list-group-item name" id="name5">Joe</li>
           </ul>
         </div>
       </div>
     </div>
+    <script>
+      $(document).ready(
+        $('#searchForm').submit(function(e){
+          console.log("got POST")
+          e.preventDefault();
+          var serializedData = $(this).serialize();
+
+          $.ajax({
+            type:"POST",
+            url:"{% url 'search' %}",
+            data: serializedData,
+            success: function(data){
+              $("#name1").text(data["name1"]);
+              $("#name2").text(data["name2"]);
+              $("#name3").text(data["name3"]);
+              $("#name4").text(data["name4"]);
+              $("#name5").text(data["name5"]);
+            }
+          });
+
+        })
+      );
+    </script>
 
 {% endblock content %}
