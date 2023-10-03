@@ -16,18 +16,21 @@
       <div class="row justify-content-center">
         <!-- select year -->
         <div class="yearSelect card col-xl-1 m-2">
-            <div class="col-12 my-2">
+            <form method="POST" id="searchYear">
+              {% csrf_token %}
+              <div class="col-12 my-2" id="test">
                 <label class="col-12 my-1 col-form-label col-form-label-lg" for="year">年份</label>
                 <select name="decade" id="year" class="form-control col-12">
-                <option value="">1990</option>
+                <!-- <option value="">1880</option>
                 <option value="">2000</option>
                 <option value="">2010</option>
-                <option value="">2020</option>
+                <option value="">2020</option> -->
                 </select>
-            </div>
-            <div class="col-12 my-2">
-                <button type="submit" class="btn btn-primary">輸入</button>
-            </div>
+              </div>
+              <div class="col-12 my-3">
+                  <button type="submit" class="btn btn-primary">輸入</button>
+              </div>
+            </form>
         </div>
         <!-- show name -->
         <div class="col-xl-5 card m-2 px-4 yearName">
@@ -40,30 +43,47 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for i in data %}
                   <tr>
-                    <th class="tableItem" scope="row">1</th>
-                    <td class="tableItem">Noah</td>
-                    <td class="tableItem">183,172</td>
+                    <th class="tableItem" scope="row">{{forloop.counter}}</th>
+                    <td class="tableItem" id="name{{forloop.counter}}">{{i.name}}</td>
+                    <td class="tableItem" id="people{{forloop.counter}}">{{i.people}}</td>
                   </tr>
-                  <tr>
-                    <th class="tableItem" scope="row">2</th>
-                    <td class="tableItem">Liam</td>
-                    <td class="tableItem">173,888</td>
-                  </tr>
-                  <tr>
-                    <th class="tableItem" scope="row">3</th>
-                    <td class="tableItem">Liam</td>
-                    <td class="tableItem">173,888</td>
-                  </tr>
-                  <tr>
-                    <th class="tableItem" scope="row">4</th>
-                    <td class="tableItem">Liam</td>
-                    <td class="tableItem">173,888</td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
             </table>
         </div>
       </div>
     </div>
+
+    <script>
+      for(let i=1880;i<2011;i=i+10)
+      {
+        $(`<option>`,{
+          value:`${i}`
+        })
+        .text(`${i}`)
+        .appendTo("#year");
+      }
+
+      $(document).ready(
+        $('#searchYear').submit(function(e){
+          e.preventDefault();
+          var serializedData = $(this).serialize();
+          $.ajax({
+            type:"POST",
+            url:"{% url 'boy' %}",
+            data: serializedData,
+            success: function(data){              
+              for (let i = 0;i<200;i++){
+                $(`#name${i+1}`).text(data[i]['fields']['name'])
+                $(`#people${i+1}`).text(data[i]['fields']['people'])
+              }
+            }
+          });
+
+        })
+      );
+    </script>
 
 {% endblock content %}
