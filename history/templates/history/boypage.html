@@ -16,10 +16,9 @@
       <div class="row justify-content-center">
         <!-- select year -->
         <div class="yearSelect card col-xl-1 m-2">
-            <form method="POST" id="searchYear">
-              {% csrf_token %}
               <div class="col-12 my-2" id="test">
                 <label class="col-12 my-1 col-form-label col-form-label-lg" for="year">年份</label>
+                {% csrf_token %}
                 <select name="decade" id="year" class="form-control col-12">
                 <!-- <option value="">1880</option>
                 <option value="">2000</option>
@@ -27,32 +26,28 @@
                 <option value="">2020</option> -->
                 </select>
               </div>
-              <div class="col-12 my-3">
-                  <button type="submit" class="btn btn-primary">輸入</button>
-              </div>
-            </form>
         </div>
         <!-- show name -->
-        <div class="col-xl-5 card m-2 px-4 yearName">
-            <table class="table yearName my-4">
-                <thead>
-                  <tr>
-                    <th class="tableItem" scope="col">排名</th>
-                    <th class="tableItem" scope="col">名字</th>
-                    <th class="tableItem" scope="col">人數</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for i in data %}
-                  <tr>
-                    <th class="tableItem" scope="row">{{forloop.counter}}</th>
-                    <td class="tableItem" id="name{{forloop.counter}}">{{i.name}}</td>
-                    <td class="tableItem" id="people{{forloop.counter}}">{{i.people}}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <div class="col-xl-5 card m-2 px-5 yearName">
+          <table class="table yearName my-4">
+              <thead>
+                <tr>
+                  <th class="tableItem" scope="col">排名</th>
+                  <th class="tableItem" scope="col">名字</th>
+                  <th class="tableItem text-end pe-5" scope="col">人數</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in data %}
+                <tr>
+                  <th class="tableItem" scope="row">{{forloop.counter}}</th>
+                  <td class="tableItem" id="name{{forloop.counter}}">{{i.name}}</td>
+                  <td class="tableItem text-end pe-5" id="people{{forloop.counter}}">{{i.people}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+      </div>
       </div>
     </div>
 
@@ -67,10 +62,15 @@
       }
 
       $(document).ready(
-        $('#searchYear').submit(function(e){
-          e.preventDefault();
+        $('#year').change(function(){
+          // console.log($(this))
           var serializedData = $(this).serialize();
+          // serializedData['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+          // console.log(typeof serializedData);
+          // console.log(serializedData);
+          let csrf = $('input[name="csrfmiddlewaretoken"]').val();
           $.ajax({
+            headers:{'X-CSRFToken':csrf},
             type:"POST",
             url:"{% url 'boy' %}",
             data: serializedData,
