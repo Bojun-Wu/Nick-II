@@ -10,3 +10,6 @@ class BabyName(models.Model):
     name = models.CharField(max_length=200)
     people = models.PositiveIntegerField()
     year = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return 'year: %d, gender: %c , name: %s, number: %d' % (self.year, self.gender, self.name, self.people)
