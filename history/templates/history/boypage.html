@@ -52,22 +52,22 @@
     </div>
 
     <script>
-      for(let i=1880;i<2011;i=i+10)
-      {
-        $(`<option>`,{
-          value:`${i}`
-        })
-        .text(`${i}`)
-        .appendTo("#year");
-      }
+      $(document).ready(
+        function(){
+          for(let i=1880;i<2011;i=i+10)
+          {
+            $(`<option>`,{
+              value:`${i}`
+            })
+            .text(`${i}`)
+            .appendTo("#year");
+          }
+        }
+      );
 
       $(document).ready(
         $('#year').change(function(){
-          // console.log($(this))
           var serializedData = $(this).serialize();
-          // serializedData['csrfmiddlewaretoken'] = '{{ csrf_token }}';
-          // console.log(typeof serializedData);
-          // console.log(serializedData);
           let csrf = $('input[name="csrfmiddlewaretoken"]').val();
           $.ajax({
             headers:{'X-CSRFToken':csrf},

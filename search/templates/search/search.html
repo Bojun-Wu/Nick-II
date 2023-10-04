@@ -45,10 +45,11 @@
                 class="form-control"
                 id="year"
                 placeholder="2000"
-                min="1900"
-                max="2010"
-                step="10"
+                min="1800"
+                max="2025"
+                step="1"
                 name = "year"
+                required
               />
             </div>
             <div class="col-md-5">
@@ -68,34 +69,59 @@
           <h4 class="h4 col-12">推薦</h4>
           <ul class="name list-group list-group-flush col-12">
             <li class="list-group-item name" id="name1">{{ name1 }}</li>
-            <li class="list-group-item name" id="name2">Bob</li>
-            <li class="list-group-item name" id="name3">Jimmy</li>
-            <li class="list-group-item name" id="name4">Kitty</li>
-            <li class="list-group-item name" id="name5">Joe</li>
+            <li class="list-group-item name" id="name2">{{ name2 }}</li>
+            <li class="list-group-item name" id="name3">{{ name3 }}</li>
+            <li class="list-group-item name" id="name4">{{ name4 }}</li>
+            <li class="list-group-item name" id="name5">{{ name5 }}</li>
           </ul>
         </div>
       </div>
     </div>
     <script>
+      var goodToGo = true;
+      var zj = /^[a-zA-Z0-9?><;,{}[\]\-_+=!@#$%\^&*|'\"]*$/g;
+      var ex = new RegExp(zj);
+
       $(document).ready(
+        
+        $('#lastName, #firstName').on('propertychange input',function(e){
+          if($(this).val().length>0 && $(this).val().search(ex)!= -1){
+            goodToGo = false;
+            $(this).get(0).setCustomValidity('請輸入中文');
+            $(this).get(0).reportValidity();
+          }
+          else if($(this).val().length===0){
+            $(this).get(0).setCustomValidity('必要欄位');
+            $(this).get(0).reportValidity();
+            goodToGo = false;
+          }
+          else{
+            $(this).get(0).setCustomValidity('');
+            goodToGo = true;
+          }
+        }),
+
         $('#searchForm').submit(function(e){
-          console.log("got POST")
           e.preventDefault();
-          var serializedData = $(this).serialize();
 
-          $.ajax({
-            type:"POST",
-            url:"{% url 'search' %}",
-            data: serializedData,
-            success: function(data){
-              $("#name1").text(data["name1"]);
-              $("#name2").text(data["name2"]);
-              $("#name3").text(data["name3"]);
-              $("#name4").text(data["name4"]);
-              $("#name5").text(data["name5"]);
-            }
-          });
+          if(goodToGo)
+          {
+            console.log("GO")
+            var serializedData = $(this).serialize();
 
+            $.ajax({
+              type:"POST",
+              url:"{% url 'search' %}",
+              data: serializedData,
+              success: function(data){
+                $("#name1").text(data["name1"]);
+                $("#name2").text(data["name2"]);
+                $("#name3").text(data["name3"]);
+                $("#name4").text(data["name4"]);
+                $("#name5").text(data["name5"]);
+              }
+            });
+          }
         })
       );
     </script>
