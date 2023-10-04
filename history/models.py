@@ -8,9 +8,9 @@ class BabyName(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     name = models.CharField(max_length=200)
+    # number of people use this name
     people = models.CharField(max_length=200)
     rank = models.PositiveSmallIntegerField(default=0)
-    # people = models.PositiveIntegerField()
     year = models.PositiveSmallIntegerField()
 
     def __str__(self):

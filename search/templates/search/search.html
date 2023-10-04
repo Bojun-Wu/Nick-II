@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="container">
-      <div class="mainArea row justify-content-center">
+      <div class="row justify-content-center">
         <div class="input col-xxl-6 h-100 card p-5 mt-3">
           <form class="row g-3" id="searchForm" method="POST">
             {% csrf_token %}
@@ -26,6 +26,7 @@
                 id="lastName"
                 placeholder="王"
                 name="lastName"
+                required
               />
             </div>
             <div class="col-md-6">
@@ -36,6 +37,7 @@
                 id="firstName"
                 placeholder="大明"
                 name = "firstName"
+                required
               />
             </div>
             <div class="col-md-5 mb-3">
@@ -84,6 +86,7 @@
 
       $(document).ready(
         
+        // check if the name input is Valid
         $('#lastName, #firstName').on('propertychange input',function(e){
           if($(this).val().length>0 && $(this).val().search(ex)!= -1){
             goodToGo = false;
@@ -107,6 +110,7 @@
           {
             console.log("GO")
 
+            // loading animate
             $('#submit')
             .text(" 讀取中...")
             .prepend('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>')

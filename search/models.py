@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+# store history search result(save api usage)
 class NameStore(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),

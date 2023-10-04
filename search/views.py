@@ -39,7 +39,7 @@ def search(request):
             for i in result:
                 result[i] = recommand[seq]
                 seq+=1
-            print("from openai")
+            print(f"{transName(firstName)} from openai")
 
         return JsonResponse(result)
     else:
