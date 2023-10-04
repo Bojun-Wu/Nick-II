@@ -12,8 +12,8 @@ def search(request):
         sex = request.POST.get('sex')
         sex = "male" if sex=="男" else "female"
 
-        print(firstName, year, sex)
-        print(type(firstName),type(year),type(sex))
+        # print(firstName, year, sex)
+        # print(type(firstName),type(year),type(sex))
 
         result = {"name1":"Hello","name2":"Got","name3":"One","name4":"Request","name5":"Jennifer"}
         time.sleep(2)
