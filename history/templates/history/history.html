@@ -3,7 +3,13 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-center mt-4">
+
+          {% if gender == "boy" %}
+          <div class="col-12"><h2 class="text-center">歷史熱門新生男性嬰兒姓名</h2></div>
+          {% else %}
           <div class="col-12"><h2 class="text-center">歷史熱門新生女性嬰兒姓名</h2></div>
+          {% endif %}
+          
           <div class="col-12">
             <h6 class="text-center" style="color: rgba(0, 0, 0, 0.352)">
               根據美國社會安全局
@@ -49,7 +55,7 @@
     <script>
       $(document).ready(
         function(){
-          for(let i=1880;i<2011;i=i+10)
+          for(let i=2010;i>1879;i-=10)
           {
             $(`<option>`,{
               value:`${i}`
@@ -68,7 +74,7 @@
           $.ajax({
             headers:{'X-CSRFToken':csrf},
             type:"POST",
-            url:"{% url 'girl' %}",
+            url:"{% url 'history' gender %}",
             data: serializedData,
             success: function(data){              
               for (let i = 0;i<200;i++){
