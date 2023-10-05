@@ -10,6 +10,7 @@ class NameStore(models.Model):
     name = models.CharField(max_length=200)
     year = models.PositiveSmallIntegerField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    
     recommand1 = models.CharField(max_length=50)
     recommand2 = models.CharField(max_length=50)
     recommand3 = models.CharField(max_length=50)

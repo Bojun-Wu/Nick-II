@@ -36,7 +36,7 @@ def getRecommand(year, sex, name, model="gpt-3.5-turbo"):
             },
         ],
     )
-
+    print(response)
     returnContent = list(response.split(", "))
 
     return returnContent

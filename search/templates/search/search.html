@@ -1,142 +1,148 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% block content %}
 
-{% block content %}
-
-    <div class="container">
-      <div class="row justify-content-center mt-4">
-        <div class="col-12"><h1 class="text-center">取英文名字</h1></div>
-        <div class="col-12"><h2 class="text-center">簡單又快速</h2></div>
-        <div class="col-12">
-          <h6 class="text-center" style="color: rgba(0, 0, 0, 0.352)">
-            迅速查找與中文讀音相似並符合出生年份主流的名字
-          </h6>
-        </div>
-      </div>
+<div class="container">
+  <div class="row justify-content-center mt-4">
+    <div class="col-12"><h1 class="text-center">取英文名字</h1></div>
+    <div class="col-12"><h2 class="text-center">簡單又快速</h2></div>
+    <div class="col-12">
+      <h6 class="text-center" style="color: rgba(0, 0, 0, 0.352)">
+        迅速查找與中文讀音相似並符合出生年份主流的名字
+      </h6>
     </div>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="input col-xxl-6 h-100 card p-5 mt-3">
-          <form class="row g-3" id="searchForm" method="POST">
-            {% csrf_token %}
-            <div class="col-md-6">
-              <label for="lastName" class="form-label fs-5">姓</label>
-              <input
-                type="text"
-                class="form-control"
-                id="lastName"
-                placeholder="王"
-                name="lastName"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="firstName" class="form-label fs-5">名</label>
-              <input
-                type="text"
-                class="form-control"
-                id="firstName"
-                placeholder="大明"
-                name = "firstName"
-                required
-              />
-            </div>
-            <div class="col-md-5 mb-3">
-              <label for="year" class="form-label fs-5">出生年</label>
-              <input
-                type="number"
-                class="form-control"
-                id="year"
-                placeholder="2000"
-                min="1800"
-                max="2025"
-                step="1"
-                name = "year"
-                required
-              />
-            </div>
-            <div class="col-md-5">
-              <label for="inputState" class="form-label fs-5">性別</label>
-              <select id="inputState" class="form-select" name="sex">
-                <option selected>男</option>
-                <option>女</option>
-              </select>
-            </div>
-            <div class="col-12 test">
-              <button type="reset" class="btn btn-secondary mx-2">清除</button>
-              <button type="submit" class="btn btn-primary" id="submit">輸入</button>
-            </div>
-          </form>
+  </div>
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="input col-xxl-6 h-100 card p-5 mt-3">
+      <form class="row g-3" id="searchForm" method="POST">
+        {% csrf_token %}
+        <div class="col-md-6">
+          <label for="lastName" class="form-label fs-5">姓</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            placeholder="王"
+            name="lastName"
+            required
+          />
         </div>
-        <div class="output row col-xxl-2 card p-5 mt-5">
-          <h4 class="h4 col-12">推薦</h4>
-          <ul class="name list-group list-group-flush col-12">
-            <li class="list-group-item name" id="name1">{{ name1 }}</li>
-            <li class="list-group-item name" id="name2">{{ name2 }}</li>
-            <li class="list-group-item name" id="name3">{{ name3 }}</li>
-            <li class="list-group-item name" id="name4">{{ name4 }}</li>
-            <li class="list-group-item name" id="name5">{{ name5 }}</li>
-          </ul>
+        <div class="col-md-6">
+          <label for="firstName" class="form-label fs-5">名</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            placeholder="大明"
+            name="firstName"
+            required
+          />
         </div>
-      </div>
+        <div class="col-md-5 mb-3">
+          <label for="year" class="form-label fs-5">出生年</label>
+          <input
+            type="number"
+            class="form-control"
+            id="year"
+            placeholder="2000"
+            min="1800"
+            max="2025"
+            step="1"
+            name="year"
+          />
+        </div>
+        <div class="col-md-5">
+          <label for="gender" class="form-label fs-5">性別</label>
+          <select id="gender" class="form-select" name="sex">
+            <option selected>男</option>
+            <option>女</option>
+          </select>
+        </div>
+        <div class="col-12 test">
+          <button type="reset" class="btn btn-secondary mx-2">清除</button>
+          <button type="submit" class="btn btn-primary" id="submit">
+            輸入
+          </button>
+        </div>
+      </form>
     </div>
-    <script>
-      var goodToGo = true;
-      var zj = /^[a-zA-Z0-9?><;,{}[\]\-_+=!@#$%\^&*|'\"]*$/g;
-      var ex = new RegExp(zj);
+    <div class="output row col-xxl-2 card p-5 mt-5">
+      <h4 class="h4 col-12">推薦</h4>
+      <ul class="name list-group list-group-flush col-12">
+        <li class="list-group-item name" id="name1">{{ name1 }}</li>
+        <li class="list-group-item name" id="name2">{{ name2 }}</li>
+        <li class="list-group-item name" id="name3">{{ name3 }}</li>
+        <li class="list-group-item name" id="name4">{{ name4 }}</li>
+        <li class="list-group-item name" id="name5">{{ name5 }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(
+    $("#lastName, #firstName, #year, #gender").on(
+      "propertychange input",
+      function (e) {
+        $(this).get(0).setCustomValidity("");
+      }
+    ),
 
-      $(document).ready(
-        
-        // check if the name input is Valid
-        $('#lastName, #firstName').on('propertychange input',function(e){
-          if($(this).val().length>0 && $(this).val().search(ex)!= -1){
-            goodToGo = false;
-            $(this).get(0).setCustomValidity('請輸入中文');
-            $(this).get(0).reportValidity();
+    $("#searchForm").submit(function (e) {
+      // prevent redirect
+      e.preventDefault();
+
+      // loading animate
+      $("#submit")
+        .text(" 讀取中...")
+        .prepend(
+          '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+        )
+        .prop("disabled", "disabled");
+
+      var serializedData = $(this).serialize();
+
+      $.ajax({
+        type: "POST",
+        url: "{% url 'search' %}",
+        data: serializedData,
+        success: function (data) {
+          // check form validation
+          if (data["error"]) {
+            console.log(Object.keys(data["error"]));
+            // console.log(data["error"]["firstName"]);
+            // console.log(data["error"]["lastName"]);
+            // console.log(data["error"]["year"]);
+
+            error = data["error"];
+            if (error["firstName"]) {
+              $("#firstName").get(0).setCustomValidity(error["firstName"]);
+              $("#firstName").get(0).reportValidity();
+            }
+            if (error["lastName"]) {
+              $("#lastName").get(0).setCustomValidity(error["lastName"]);
+              $("#lastName").get(0).reportValidity();
+            }
+            if (error["year"]) {
+              $("#year").get(0).setCustomValidity(error["year"]);
+              $("#year").get(0).reportValidity();
+            }
+            if (error["sex"]) {
+              $("#gender").get(0).setCustomValidity(error["sex"]);
+              $("#gender").get(0).reportValidity();
+            }
+          } else {
+            $("#name1").text(data["name1"]);
+            $("#name2").text(data["name2"]);
+            $("#name3").text(data["name3"]);
+            $("#name4").text(data["name4"]);
+            $("#name5").text(data["name5"]);
           }
-          else if($(this).val().length===0){
-            $(this).get(0).setCustomValidity('必要欄位');
-            $(this).get(0).reportValidity();
-            goodToGo = false;
-          }
-          else{
-            $(this).get(0).setCustomValidity('');
-            goodToGo = true;
-          }
-        }),
 
-        $('#searchForm').submit(function(e){
-          e.preventDefault();
-          if(goodToGo)
-          {
-            console.log("GO")
-
-            // loading animate
-            $('#submit')
-            .text(" 讀取中...")
-            .prepend('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>')
-            .prop('disabled', 'disabled');
-            
-
-            var serializedData = $(this).serialize();
-
-            $.ajax({
-              type:"POST",
-              url:"{% url 'search' %}",
-              data: serializedData,
-              success: function(data){
-                $("#name1").text(data["name1"]);
-                $("#name2").text(data["name2"]);
-                $("#name3").text(data["name3"]);
-                $("#name4").text(data["name4"]);
-                $("#name5").text(data["name5"]);
-                $('#submit')
-                .text("輸入")
-                .prop("disabled",false);
-              }
-            });
-          }
-        })
-      );
-    </script>
+          $("#submit").text("輸入").prop("disabled", false);
+        },
+      });
+    })
+  );
+</script>
 
 {% endblock content %}
