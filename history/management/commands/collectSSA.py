@@ -8,8 +8,6 @@ from bs4 import BeautifulSoup
 class Command(BaseCommand):
     
     def handle(self, *args, **options):
-        BabyName.objects.all().delete()
-
         for i in range(1880,2020,10):
             response = requests.get(f"https://www.ssa.gov/oact/babynames/decades/names{i}s.html")
             soup = BeautifulSoup(response.text,"html.parser")
