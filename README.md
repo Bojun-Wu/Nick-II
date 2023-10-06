@@ -20,6 +20,7 @@ Then run the following commands to run your app:
   pip install -r requirements.txt
   python manage.py migrate
   python manage.py collectSSA
+  python manage.py runserver
 ```
 
 ## Tech Used
