@@ -15,11 +15,12 @@ def search(request):
         # check form validation
         if form.is_valid():
             data = form.cleaned_data
-            nameTrans = transName(data["firstName"])
+            name = data["firstName"]
+            nameTrans = transName(name)
             sex="M" if data["sex"]=="男" else "F"
 
             try:
-                print(nameTrans,data["year"],sex)
+                # print(nameTrans,data["year"],sex)
                 recommand = NameStore.objects.get(name=nameTrans,year=data["year"],gender=sex)
 
                 result["name1"] = recommand.recommand1
@@ -27,14 +28,13 @@ def search(request):
                 result["name3"] = recommand.recommand3
                 result["name4"] = recommand.recommand4
                 result["name5"] = recommand.recommand5
-                print(f"{nameTrans} from database")
+                print(f"{nameTrans}, {name} from database")
             
             except Exception as e:
-                print(e)
-
                 sexShort = "male" if sex=="M" else "female"
-                print("get openai data",data["year"],sexShort,data["firstName"])
-                recommand = getRecommand(data["year"],sexShort,data["firstName"])
+                
+                print(e,"get data from openai data",data["year"],sexShort,name)
+                recommand = getRecommand(data["year"],sexShort,name)
 
                 # store retrieved data to database
                 NameStore.objects.create(name=nameTrans, gender=sex, year=data["year"], recommand1=recommand[0],recommand2=recommand[1],recommand3=recommand[2],recommand4=recommand[3],recommand5=recommand[4])
@@ -43,7 +43,7 @@ def search(request):
                 for i in result:
                     result[i] = recommand[seq]
                     seq+=1
-                print(f"{nameTrans} from openai")
+                print(f"{nameTrans}, {name} from openai")
 
         else:
             print("Error ", form.errors.keys())
