@@ -8,10 +8,8 @@ Additionally, Nick-II employs web scraping to retrieve data from the United Stat
 allowing users to search for the top 200 most popular male and female baby names in the United States since 1880.
 
 ## Screenshot
-
-
-<img src='https://github.com/Bojun-Wu/Nick-II/assets/87135678/70be02fe-2c9f-44bb-9c86-867a06dbcb03.jpg' align='left' width='45%'>
-<img src='https://github.com/Bojun-Wu/Nick-II/assets/87135678/516a0aaf-91c3-47c4-8e36-e65bd9239161.jpg' width='45%'>
+<img src='https://user-images.githubusercontent.com/87135678/273277508-00fbf2bc-1170-4821-8ca7-f364476fdeaf.png' align='left' width='45%'>
+<img src='https://user-images.githubusercontent.com/87135678/273277755-d46fbfd8-34c0-47e4-a9db-6754bbf39db6.png' width='45%'>
 
 ## Getting Started
 To get started, follow the following steps:
