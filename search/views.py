@@ -20,7 +20,7 @@ def search(request):
             sex="M" if data["sex"]=="男" else "F"
 
             try:
-                print(nameTrans,data["year"],sex)
+                # print(nameTrans,data["year"],sex)
                 recommand = NameStore.objects.get(name=nameTrans,year=data["year"],gender=sex)
 
                 result["name1"] = recommand.recommand1
@@ -31,10 +31,9 @@ def search(request):
                 print(f"{nameTrans}, {name} from database")
             
             except Exception as e:
-                print(e)
-
                 sexShort = "male" if sex=="M" else "female"
-                print("get openai data",data["year"],sexShort,name)
+                
+                print(e,"get data from openai data",data["year"],sexShort,name)
                 recommand = getRecommand(data["year"],sexShort,name)
 
                 # store retrieved data to database
