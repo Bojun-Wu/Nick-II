@@ -1,1 +1,1 @@
-web: gunicorn name_helper.wsgi --log-file -
+web: python manage.py migrate && gunicorn name_helper.wsgi --log-file -
