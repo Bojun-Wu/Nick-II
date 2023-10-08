@@ -1,5 +1,15 @@
 {% extends 'main.html' %}
 
+{% block title %}
+
+{% if gender == "boy" %}
+<title>Boy</title>
+{% else %}
+<title>Girl</title>
+{% endif %}
+
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row justify-content-center mt-4">
